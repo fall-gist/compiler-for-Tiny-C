@@ -1,0 +1,13 @@
+int f(){
+	int x, y;
+	x=0;
+	y=++x;
+	return x;	
+}
+
+int g(){
+	int x, y;
+	x=0;
+	y=--x;
+	return y;
+}

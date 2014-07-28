@@ -1,0 +1,2141 @@
+Terminals unused in grammar
+
+   NEG
+   CONS
+   PRGM
+   DECL
+   FUNDEF
+   PARAM_DECL
+   CMPD_STM
+   EXPR
+   FCALL
+   DECLARATIONL
+   DECLARATORL
+   STATEL
+   PARAMTYPEL
+   ARGUEXPRL
+
+
+状態 135 conflicts: 1 shift/reduce
+
+
+文法
+
+    0 $accept: main $end
+
+    1 $@1: /* 空 */
+
+    2 main: $@1 program
+
+    3 program: ext_declaration
+    4        | program ext_declaration
+
+    5 ext_declaration: declaration
+    6                | funct_def
+
+    7 declaration: INT declarator_list ';'
+
+    8 declarator_list: decl_assign
+    9                | declarator_list ',' decl_assign
+
+   10 decl_assign: declarator
+   11            | declarator ASSIGN assign_expr
+
+   12 declarator: IDENTIFIER
+
+   13 $@2: /* 空 */
+
+   14 $@3: /* 空 */
+
+   15 funct_def: INT declarator '(' $@2 param_type_list_opt $@3 ')' comp_state
+
+   16 param_type_list_opt: /* 空 */
+   17                    | param_type_list
+
+   18 param_type_list: param_declaration
+   19                | param_type_list ',' param_declaration
+
+   20 param_declaration: INT declarator
+
+   21 state: ';'
+   22      | expr ';'
+   23      | comp_state
+   24      | IF '(' expr ')' state
+   25      | IF '(' expr ')' state ELSE state
+
+   26 $@4: /* 空 */
+
+   27 state: WHILE $@4 '(' expr ')' state
+
+   28 $@5: /* 空 */
+
+   29 state: FOR $@5 '(' expr_opt ';' expr_opt ';' expr_opt ')' state
+   30      | RETURN expr ';'
+
+   31 $@6: /* 空 */
+
+   32 comp_state: '{' $@6 declaration_list_opt state_list_opt '}'
+
+   33 declaration_list_opt: /* 空 */
+   34                     | declaration_list
+
+   35 state_list_opt: /* 空 */
+   36               | state_list
+
+   37 declaration_list: declaration
+   38                 | declaration_list declaration
+
+   39 state_list: state
+   40           | state_list state
+
+   41 expr_opt: /* 空 */
+   42         | expr
+
+   43 expr: assign_expr
+   44     | expr ',' assign_expr
+   45     | BREAK
+   46     | CONTINUE
+
+   47 assign_expr: logical_OR_expr
+   48            | IDENTIFIER ASSIGN assign_expr
+   49            | IDENTIFIER ADDASSIGN assign_expr
+   50            | IDENTIFIER SUBASSIGN assign_expr
+   51            | IDENTIFIER MULASSIGN assign_expr
+   52            | IDENTIFIER DIVASSIGN assign_expr
+   53            | IDENTIFIER REMASSIGN assign_expr
+
+   54 logical_OR_expr: logical_AND_expr
+   55                | logical_OR_expr OR logical_AND_expr
+
+   56 logical_AND_expr: equality_expr
+   57                 | logical_AND_expr AND equality_expr
+
+   58 equality_expr: relation_expr
+   59              | equality_expr EQ relation_expr
+   60              | equality_expr NE relation_expr
+
+   61 relation_expr: add_expr
+   62              | relation_expr LT add_expr
+   63              | relation_expr MT add_expr
+   64              | relation_expr ELT add_expr
+   65              | relation_expr EMT add_expr
+
+   66 add_expr: mult_expr
+   67         | add_expr PLUS mult_expr
+   68         | add_expr MINUS mult_expr
+
+   69 mult_expr: unary_expr
+   70          | mult_expr TIMES unary_expr
+   71          | mult_expr DIV unary_expr
+   72          | mult_expr REMAIN unary_expr
+
+   73 unary_expr: postfix_expr
+   74           | MINUS unary_expr
+   75           | INC IDENTIFIER
+   76           | DEC IDENTIFIER
+
+   77 postfix_expr: prim_expr
+   78             | IDENTIFIER '(' argu_expr_list_opt ')'
+
+   79 argu_expr_list_opt: /* 空 */
+   80                   | argu_expr_list
+
+   81 prim_expr: IDENTIFIER
+   82          | CONST
+   83          | '(' expr ')'
+
+   84 argu_expr_list: assign_expr
+   85               | argu_expr_list ',' assign_expr
+
+
+出現位置の規則による終端
+
+$end (0) 0
+'(' (40) 15 24 25 27 29 78 83
+')' (41) 15 24 25 27 29 78 83
+',' (44) 9 19 44 85
+';' (59) 7 21 22 29 30
+'{' (123) 32
+'}' (125) 32
+error (256)
+CONST (258) 82
+IDENTIFIER (259) 12 48 49 50 51 52 53 75 76 78 81
+INT (260) 7 15 20
+IF (261) 24 25
+ELSE (262) 25
+WHILE (263) 27
+FOR (264) 29
+BREAK (265) 45
+CONTINUE (266) 46
+RETURN (267) 30
+PLUS (268) 67
+MINUS (269) 68 74
+TIMES (270) 70
+DIV (271) 71
+REMAIN (272) 72
+ASSIGN (273) 11 48
+ADDASSIGN (274) 49
+SUBASSIGN (275) 50
+MULASSIGN (276) 51
+DIVASSIGN (277) 52
+REMASSIGN (278) 53
+OR (279) 55
+AND (280) 57
+EQ (281) 59
+NE (282) 60
+LT (283) 62
+MT (284) 63
+ELT (285) 64
+EMT (286) 65
+NEG (287)
+INC (288) 75
+DEC (289) 76
+CONS (290)
+PRGM (291)
+DECL (292)
+FUNDEF (293)
+PARAM_DECL (294)
+CMPD_STM (295)
+EXPR (296)
+FCALL (297)
+DECLARATIONL (298)
+DECLARATORL (299)
+STATEL (300)
+PARAMTYPEL (301)
+ARGUEXPRL (302)
+
+
+出現位置の規則による非終端
+
+$accept (54)
+    左辺: 0
+main (55)
+    左辺: 2, 右辺: 0
+$@1 (56)
+    左辺: 1, 右辺: 2
+program (57)
+    左辺: 3 4, 右辺: 2 4
+ext_declaration (58)
+    左辺: 5 6, 右辺: 3 4
+declaration (59)
+    左辺: 7, 右辺: 5 37 38
+declarator_list (60)
+    左辺: 8 9, 右辺: 7 9
+decl_assign (61)
+    左辺: 10 11, 右辺: 8 9
+declarator (62)
+    左辺: 12, 右辺: 10 11 15 20
+funct_def (63)
+    左辺: 15, 右辺: 6
+$@2 (64)
+    左辺: 13, 右辺: 15
+$@3 (65)
+    左辺: 14, 右辺: 15
+param_type_list_opt (66)
+    左辺: 16 17, 右辺: 15
+param_type_list (67)
+    左辺: 18 19, 右辺: 17 19
+param_declaration (68)
+    左辺: 20, 右辺: 18 19
+state (69)
+    左辺: 21 22 23 24 25 27 29 30, 右辺: 24 25 27 29 39 40
+$@4 (70)
+    左辺: 26, 右辺: 27
+$@5 (71)
+    左辺: 28, 右辺: 29
+comp_state (72)
+    左辺: 32, 右辺: 15 23
+$@6 (73)
+    左辺: 31, 右辺: 32
+declaration_list_opt (74)
+    左辺: 33 34, 右辺: 32
+state_list_opt (75)
+    左辺: 35 36, 右辺: 32
+declaration_list (76)
+    左辺: 37 38, 右辺: 34 38
+state_list (77)
+    左辺: 39 40, 右辺: 36 40
+expr_opt (78)
+    左辺: 41 42, 右辺: 29
+expr (79)
+    左辺: 43 44 45 46, 右辺: 22 24 25 27 30 42 44 83
+assign_expr (80)
+    左辺: 47 48 49 50 51 52 53, 右辺: 11 43 44 48 49 50 51 52 53
+    84 85
+logical_OR_expr (81)
+    左辺: 54 55, 右辺: 47 55
+logical_AND_expr (82)
+    左辺: 56 57, 右辺: 54 55 57
+equality_expr (83)
+    左辺: 58 59 60, 右辺: 56 57 59 60
+relation_expr (84)
+    左辺: 61 62 63 64 65, 右辺: 58 59 60 62 63 64 65
+add_expr (85)
+    左辺: 66 67 68, 右辺: 61 62 63 64 65 67 68
+mult_expr (86)
+    左辺: 69 70 71 72, 右辺: 66 67 68 70 71 72
+unary_expr (87)
+    左辺: 73 74 75 76, 右辺: 69 70 71 72 74
+postfix_expr (88)
+    左辺: 77 78, 右辺: 73
+argu_expr_list_opt (89)
+    左辺: 79 80, 右辺: 78
+prim_expr (90)
+    左辺: 81 82 83, 右辺: 77
+argu_expr_list (91)
+    左辺: 84 85, 右辺: 80 85
+
+
+状態 0
+
+    0 $accept: . main $end
+
+    $default  reduce using rule 1 ($@1)
+
+    main  go to state 1
+    $@1   go to state 2
+
+
+状態 1
+
+    0 $accept: main . $end
+
+    $end  shift, and go to state 3
+
+
+状態 2
+
+    2 main: $@1 . program
+
+    INT  shift, and go to state 4
+
+    program          go to state 5
+    ext_declaration  go to state 6
+    declaration      go to state 7
+    funct_def        go to state 8
+
+
+状態 3
+
+    0 $accept: main $end .
+
+    $default  accept
+
+
+状態 4
+
+    7 declaration: INT . declarator_list ';'
+   15 funct_def: INT . declarator '(' $@2 param_type_list_opt $@3 ')' comp_state
+
+    IDENTIFIER  shift, and go to state 9
+
+    declarator_list  go to state 10
+    decl_assign      go to state 11
+    declarator       go to state 12
+
+
+状態 5
+
+    2 main: $@1 program .
+    4 program: program . ext_declaration
+
+    INT  shift, and go to state 4
+
+    $default  reduce using rule 2 (main)
+
+    ext_declaration  go to state 13
+    declaration      go to state 7
+    funct_def        go to state 8
+
+
+状態 6
+
+    3 program: ext_declaration .
+
+    $default  reduce using rule 3 (program)
+
+
+状態 7
+
+    5 ext_declaration: declaration .
+
+    $default  reduce using rule 5 (ext_declaration)
+
+
+状態 8
+
+    6 ext_declaration: funct_def .
+
+    $default  reduce using rule 6 (ext_declaration)
+
+
+状態 9
+
+   12 declarator: IDENTIFIER .
+
+    $default  reduce using rule 12 (declarator)
+
+
+状態 10
+
+    7 declaration: INT declarator_list . ';'
+    9 declarator_list: declarator_list . ',' decl_assign
+
+    ';'  shift, and go to state 14
+    ','  shift, and go to state 15
+
+
+状態 11
+
+    8 declarator_list: decl_assign .
+
+    $default  reduce using rule 8 (declarator_list)
+
+
+状態 12
+
+   10 decl_assign: declarator .
+   11            | declarator . ASSIGN assign_expr
+   15 funct_def: INT declarator . '(' $@2 param_type_list_opt $@3 ')' comp_state
+
+    ASSIGN  shift, and go to state 16
+    '('     shift, and go to state 17
+
+    $default  reduce using rule 10 (decl_assign)
+
+
+状態 13
+
+    4 program: program ext_declaration .
+
+    $default  reduce using rule 4 (program)
+
+
+状態 14
+
+    7 declaration: INT declarator_list ';' .
+
+    $default  reduce using rule 7 (declaration)
+
+
+状態 15
+
+    9 declarator_list: declarator_list ',' . decl_assign
+
+    IDENTIFIER  shift, and go to state 9
+
+    decl_assign  go to state 18
+    declarator   go to state 19
+
+
+状態 16
+
+   11 decl_assign: declarator ASSIGN . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 26
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 17
+
+   15 funct_def: INT declarator '(' . $@2 param_type_list_opt $@3 ')' comp_state
+
+    $default  reduce using rule 13 ($@2)
+
+    $@2  go to state 36
+
+
+状態 18
+
+    9 declarator_list: declarator_list ',' decl_assign .
+
+    $default  reduce using rule 9 (declarator_list)
+
+
+状態 19
+
+   10 decl_assign: declarator .
+   11            | declarator . ASSIGN assign_expr
+
+    ASSIGN  shift, and go to state 16
+
+    $default  reduce using rule 10 (decl_assign)
+
+
+状態 20
+
+   82 prim_expr: CONST .
+
+    $default  reduce using rule 82 (prim_expr)
+
+
+状態 21
+
+   48 assign_expr: IDENTIFIER . ASSIGN assign_expr
+   49            | IDENTIFIER . ADDASSIGN assign_expr
+   50            | IDENTIFIER . SUBASSIGN assign_expr
+   51            | IDENTIFIER . MULASSIGN assign_expr
+   52            | IDENTIFIER . DIVASSIGN assign_expr
+   53            | IDENTIFIER . REMASSIGN assign_expr
+   78 postfix_expr: IDENTIFIER . '(' argu_expr_list_opt ')'
+   81 prim_expr: IDENTIFIER .
+
+    ASSIGN     shift, and go to state 37
+    ADDASSIGN  shift, and go to state 38
+    SUBASSIGN  shift, and go to state 39
+    MULASSIGN  shift, and go to state 40
+    DIVASSIGN  shift, and go to state 41
+    REMASSIGN  shift, and go to state 42
+    '('        shift, and go to state 43
+
+    $default  reduce using rule 81 (prim_expr)
+
+
+状態 22
+
+   74 unary_expr: MINUS . unary_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    unary_expr    go to state 45
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 23
+
+   75 unary_expr: INC . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 46
+
+
+状態 24
+
+   76 unary_expr: DEC . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 47
+
+
+状態 25
+
+   83 prim_expr: '(' . expr ')'
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    expr              go to state 50
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 26
+
+   11 decl_assign: declarator ASSIGN assign_expr .
+
+    $default  reduce using rule 11 (decl_assign)
+
+
+状態 27
+
+   47 assign_expr: logical_OR_expr .
+   55 logical_OR_expr: logical_OR_expr . OR logical_AND_expr
+
+    OR  shift, and go to state 52
+
+    $default  reduce using rule 47 (assign_expr)
+
+
+状態 28
+
+   54 logical_OR_expr: logical_AND_expr .
+   57 logical_AND_expr: logical_AND_expr . AND equality_expr
+
+    AND  shift, and go to state 53
+
+    $default  reduce using rule 54 (logical_OR_expr)
+
+
+状態 29
+
+   56 logical_AND_expr: equality_expr .
+   59 equality_expr: equality_expr . EQ relation_expr
+   60              | equality_expr . NE relation_expr
+
+    EQ  shift, and go to state 54
+    NE  shift, and go to state 55
+
+    $default  reduce using rule 56 (logical_AND_expr)
+
+
+状態 30
+
+   58 equality_expr: relation_expr .
+   62 relation_expr: relation_expr . LT add_expr
+   63              | relation_expr . MT add_expr
+   64              | relation_expr . ELT add_expr
+   65              | relation_expr . EMT add_expr
+
+    LT   shift, and go to state 56
+    MT   shift, and go to state 57
+    ELT  shift, and go to state 58
+    EMT  shift, and go to state 59
+
+    $default  reduce using rule 58 (equality_expr)
+
+
+状態 31
+
+   61 relation_expr: add_expr .
+   67 add_expr: add_expr . PLUS mult_expr
+   68         | add_expr . MINUS mult_expr
+
+    PLUS   shift, and go to state 60
+    MINUS  shift, and go to state 61
+
+    $default  reduce using rule 61 (relation_expr)
+
+
+状態 32
+
+   66 add_expr: mult_expr .
+   70 mult_expr: mult_expr . TIMES unary_expr
+   71          | mult_expr . DIV unary_expr
+   72          | mult_expr . REMAIN unary_expr
+
+    TIMES   shift, and go to state 62
+    DIV     shift, and go to state 63
+    REMAIN  shift, and go to state 64
+
+    $default  reduce using rule 66 (add_expr)
+
+
+状態 33
+
+   69 mult_expr: unary_expr .
+
+    $default  reduce using rule 69 (mult_expr)
+
+
+状態 34
+
+   73 unary_expr: postfix_expr .
+
+    $default  reduce using rule 73 (unary_expr)
+
+
+状態 35
+
+   77 postfix_expr: prim_expr .
+
+    $default  reduce using rule 77 (postfix_expr)
+
+
+状態 36
+
+   15 funct_def: INT declarator '(' $@2 . param_type_list_opt $@3 ')' comp_state
+
+    INT  shift, and go to state 65
+
+    $default  reduce using rule 16 (param_type_list_opt)
+
+    param_type_list_opt  go to state 66
+    param_type_list      go to state 67
+    param_declaration    go to state 68
+
+
+状態 37
+
+   48 assign_expr: IDENTIFIER ASSIGN . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 69
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 38
+
+   49 assign_expr: IDENTIFIER ADDASSIGN . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 70
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 39
+
+   50 assign_expr: IDENTIFIER SUBASSIGN . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 71
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 40
+
+   51 assign_expr: IDENTIFIER MULASSIGN . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 72
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 41
+
+   52 assign_expr: IDENTIFIER DIVASSIGN . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 73
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 42
+
+   53 assign_expr: IDENTIFIER REMASSIGN . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 74
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 43
+
+   78 postfix_expr: IDENTIFIER '(' . argu_expr_list_opt ')'
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    $default  reduce using rule 79 (argu_expr_list_opt)
+
+    assign_expr         go to state 75
+    logical_OR_expr     go to state 27
+    logical_AND_expr    go to state 28
+    equality_expr       go to state 29
+    relation_expr       go to state 30
+    add_expr            go to state 31
+    mult_expr           go to state 32
+    unary_expr          go to state 33
+    postfix_expr        go to state 34
+    argu_expr_list_opt  go to state 76
+    prim_expr           go to state 35
+    argu_expr_list      go to state 77
+
+
+状態 44
+
+   78 postfix_expr: IDENTIFIER . '(' argu_expr_list_opt ')'
+   81 prim_expr: IDENTIFIER .
+
+    '('  shift, and go to state 43
+
+    $default  reduce using rule 81 (prim_expr)
+
+
+状態 45
+
+   74 unary_expr: MINUS unary_expr .
+
+    $default  reduce using rule 74 (unary_expr)
+
+
+状態 46
+
+   75 unary_expr: INC IDENTIFIER .
+
+    $default  reduce using rule 75 (unary_expr)
+
+
+状態 47
+
+   76 unary_expr: DEC IDENTIFIER .
+
+    $default  reduce using rule 76 (unary_expr)
+
+
+状態 48
+
+   45 expr: BREAK .
+
+    $default  reduce using rule 45 (expr)
+
+
+状態 49
+
+   46 expr: CONTINUE .
+
+    $default  reduce using rule 46 (expr)
+
+
+状態 50
+
+   44 expr: expr . ',' assign_expr
+   83 prim_expr: '(' expr . ')'
+
+    ','  shift, and go to state 78
+    ')'  shift, and go to state 79
+
+
+状態 51
+
+   43 expr: assign_expr .
+
+    $default  reduce using rule 43 (expr)
+
+
+状態 52
+
+   55 logical_OR_expr: logical_OR_expr OR . logical_AND_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    logical_AND_expr  go to state 80
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 53
+
+   57 logical_AND_expr: logical_AND_expr AND . equality_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    equality_expr  go to state 81
+    relation_expr  go to state 30
+    add_expr       go to state 31
+    mult_expr      go to state 32
+    unary_expr     go to state 33
+    postfix_expr   go to state 34
+    prim_expr      go to state 35
+
+
+状態 54
+
+   59 equality_expr: equality_expr EQ . relation_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    relation_expr  go to state 82
+    add_expr       go to state 31
+    mult_expr      go to state 32
+    unary_expr     go to state 33
+    postfix_expr   go to state 34
+    prim_expr      go to state 35
+
+
+状態 55
+
+   60 equality_expr: equality_expr NE . relation_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    relation_expr  go to state 83
+    add_expr       go to state 31
+    mult_expr      go to state 32
+    unary_expr     go to state 33
+    postfix_expr   go to state 34
+    prim_expr      go to state 35
+
+
+状態 56
+
+   62 relation_expr: relation_expr LT . add_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    add_expr      go to state 84
+    mult_expr     go to state 32
+    unary_expr    go to state 33
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 57
+
+   63 relation_expr: relation_expr MT . add_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    add_expr      go to state 85
+    mult_expr     go to state 32
+    unary_expr    go to state 33
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 58
+
+   64 relation_expr: relation_expr ELT . add_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    add_expr      go to state 86
+    mult_expr     go to state 32
+    unary_expr    go to state 33
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 59
+
+   65 relation_expr: relation_expr EMT . add_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    add_expr      go to state 87
+    mult_expr     go to state 32
+    unary_expr    go to state 33
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 60
+
+   67 add_expr: add_expr PLUS . mult_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    mult_expr     go to state 88
+    unary_expr    go to state 33
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 61
+
+   68 add_expr: add_expr MINUS . mult_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    mult_expr     go to state 89
+    unary_expr    go to state 33
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 62
+
+   70 mult_expr: mult_expr TIMES . unary_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    unary_expr    go to state 90
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 63
+
+   71 mult_expr: mult_expr DIV . unary_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    unary_expr    go to state 91
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 64
+
+   72 mult_expr: mult_expr REMAIN . unary_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 44
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    unary_expr    go to state 92
+    postfix_expr  go to state 34
+    prim_expr     go to state 35
+
+
+状態 65
+
+   20 param_declaration: INT . declarator
+
+    IDENTIFIER  shift, and go to state 9
+
+    declarator  go to state 93
+
+
+状態 66
+
+   15 funct_def: INT declarator '(' $@2 param_type_list_opt . $@3 ')' comp_state
+
+    $default  reduce using rule 14 ($@3)
+
+    $@3  go to state 94
+
+
+状態 67
+
+   17 param_type_list_opt: param_type_list .
+   19 param_type_list: param_type_list . ',' param_declaration
+
+    ','  shift, and go to state 95
+
+    $default  reduce using rule 17 (param_type_list_opt)
+
+
+状態 68
+
+   18 param_type_list: param_declaration .
+
+    $default  reduce using rule 18 (param_type_list)
+
+
+状態 69
+
+   48 assign_expr: IDENTIFIER ASSIGN assign_expr .
+
+    $default  reduce using rule 48 (assign_expr)
+
+
+状態 70
+
+   49 assign_expr: IDENTIFIER ADDASSIGN assign_expr .
+
+    $default  reduce using rule 49 (assign_expr)
+
+
+状態 71
+
+   50 assign_expr: IDENTIFIER SUBASSIGN assign_expr .
+
+    $default  reduce using rule 50 (assign_expr)
+
+
+状態 72
+
+   51 assign_expr: IDENTIFIER MULASSIGN assign_expr .
+
+    $default  reduce using rule 51 (assign_expr)
+
+
+状態 73
+
+   52 assign_expr: IDENTIFIER DIVASSIGN assign_expr .
+
+    $default  reduce using rule 52 (assign_expr)
+
+
+状態 74
+
+   53 assign_expr: IDENTIFIER REMASSIGN assign_expr .
+
+    $default  reduce using rule 53 (assign_expr)
+
+
+状態 75
+
+   84 argu_expr_list: assign_expr .
+
+    $default  reduce using rule 84 (argu_expr_list)
+
+
+状態 76
+
+   78 postfix_expr: IDENTIFIER '(' argu_expr_list_opt . ')'
+
+    ')'  shift, and go to state 96
+
+
+状態 77
+
+   80 argu_expr_list_opt: argu_expr_list .
+   85 argu_expr_list: argu_expr_list . ',' assign_expr
+
+    ','  shift, and go to state 97
+
+    $default  reduce using rule 80 (argu_expr_list_opt)
+
+
+状態 78
+
+   44 expr: expr ',' . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 98
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 79
+
+   83 prim_expr: '(' expr ')' .
+
+    $default  reduce using rule 83 (prim_expr)
+
+
+状態 80
+
+   55 logical_OR_expr: logical_OR_expr OR logical_AND_expr .
+   57 logical_AND_expr: logical_AND_expr . AND equality_expr
+
+    AND  shift, and go to state 53
+
+    $default  reduce using rule 55 (logical_OR_expr)
+
+
+状態 81
+
+   57 logical_AND_expr: logical_AND_expr AND equality_expr .
+   59 equality_expr: equality_expr . EQ relation_expr
+   60              | equality_expr . NE relation_expr
+
+    EQ  shift, and go to state 54
+    NE  shift, and go to state 55
+
+    $default  reduce using rule 57 (logical_AND_expr)
+
+
+状態 82
+
+   59 equality_expr: equality_expr EQ relation_expr .
+   62 relation_expr: relation_expr . LT add_expr
+   63              | relation_expr . MT add_expr
+   64              | relation_expr . ELT add_expr
+   65              | relation_expr . EMT add_expr
+
+    LT   shift, and go to state 56
+    MT   shift, and go to state 57
+    ELT  shift, and go to state 58
+    EMT  shift, and go to state 59
+
+    $default  reduce using rule 59 (equality_expr)
+
+
+状態 83
+
+   60 equality_expr: equality_expr NE relation_expr .
+   62 relation_expr: relation_expr . LT add_expr
+   63              | relation_expr . MT add_expr
+   64              | relation_expr . ELT add_expr
+   65              | relation_expr . EMT add_expr
+
+    LT   shift, and go to state 56
+    MT   shift, and go to state 57
+    ELT  shift, and go to state 58
+    EMT  shift, and go to state 59
+
+    $default  reduce using rule 60 (equality_expr)
+
+
+状態 84
+
+   62 relation_expr: relation_expr LT add_expr .
+   67 add_expr: add_expr . PLUS mult_expr
+   68         | add_expr . MINUS mult_expr
+
+    PLUS   shift, and go to state 60
+    MINUS  shift, and go to state 61
+
+    $default  reduce using rule 62 (relation_expr)
+
+
+状態 85
+
+   63 relation_expr: relation_expr MT add_expr .
+   67 add_expr: add_expr . PLUS mult_expr
+   68         | add_expr . MINUS mult_expr
+
+    PLUS   shift, and go to state 60
+    MINUS  shift, and go to state 61
+
+    $default  reduce using rule 63 (relation_expr)
+
+
+状態 86
+
+   64 relation_expr: relation_expr ELT add_expr .
+   67 add_expr: add_expr . PLUS mult_expr
+   68         | add_expr . MINUS mult_expr
+
+    PLUS   shift, and go to state 60
+    MINUS  shift, and go to state 61
+
+    $default  reduce using rule 64 (relation_expr)
+
+
+状態 87
+
+   65 relation_expr: relation_expr EMT add_expr .
+   67 add_expr: add_expr . PLUS mult_expr
+   68         | add_expr . MINUS mult_expr
+
+    PLUS   shift, and go to state 60
+    MINUS  shift, and go to state 61
+
+    $default  reduce using rule 65 (relation_expr)
+
+
+状態 88
+
+   67 add_expr: add_expr PLUS mult_expr .
+   70 mult_expr: mult_expr . TIMES unary_expr
+   71          | mult_expr . DIV unary_expr
+   72          | mult_expr . REMAIN unary_expr
+
+    TIMES   shift, and go to state 62
+    DIV     shift, and go to state 63
+    REMAIN  shift, and go to state 64
+
+    $default  reduce using rule 67 (add_expr)
+
+
+状態 89
+
+   68 add_expr: add_expr MINUS mult_expr .
+   70 mult_expr: mult_expr . TIMES unary_expr
+   71          | mult_expr . DIV unary_expr
+   72          | mult_expr . REMAIN unary_expr
+
+    TIMES   shift, and go to state 62
+    DIV     shift, and go to state 63
+    REMAIN  shift, and go to state 64
+
+    $default  reduce using rule 68 (add_expr)
+
+
+状態 90
+
+   70 mult_expr: mult_expr TIMES unary_expr .
+
+    $default  reduce using rule 70 (mult_expr)
+
+
+状態 91
+
+   71 mult_expr: mult_expr DIV unary_expr .
+
+    $default  reduce using rule 71 (mult_expr)
+
+
+状態 92
+
+   72 mult_expr: mult_expr REMAIN unary_expr .
+
+    $default  reduce using rule 72 (mult_expr)
+
+
+状態 93
+
+   20 param_declaration: INT declarator .
+
+    $default  reduce using rule 20 (param_declaration)
+
+
+状態 94
+
+   15 funct_def: INT declarator '(' $@2 param_type_list_opt $@3 . ')' comp_state
+
+    ')'  shift, and go to state 99
+
+
+状態 95
+
+   19 param_type_list: param_type_list ',' . param_declaration
+
+    INT  shift, and go to state 65
+
+    param_declaration  go to state 100
+
+
+状態 96
+
+   78 postfix_expr: IDENTIFIER '(' argu_expr_list_opt ')' .
+
+    $default  reduce using rule 78 (postfix_expr)
+
+
+状態 97
+
+   85 argu_expr_list: argu_expr_list ',' . assign_expr
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    assign_expr       go to state 101
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 98
+
+   44 expr: expr ',' assign_expr .
+
+    $default  reduce using rule 44 (expr)
+
+
+状態 99
+
+   15 funct_def: INT declarator '(' $@2 param_type_list_opt $@3 ')' . comp_state
+
+    '{'  shift, and go to state 102
+
+    comp_state  go to state 103
+
+
+状態 100
+
+   19 param_type_list: param_type_list ',' param_declaration .
+
+    $default  reduce using rule 19 (param_type_list)
+
+
+状態 101
+
+   85 argu_expr_list: argu_expr_list ',' assign_expr .
+
+    $default  reduce using rule 85 (argu_expr_list)
+
+
+状態 102
+
+   32 comp_state: '{' . $@6 declaration_list_opt state_list_opt '}'
+
+    $default  reduce using rule 31 ($@6)
+
+    $@6  go to state 104
+
+
+状態 103
+
+   15 funct_def: INT declarator '(' $@2 param_type_list_opt $@3 ')' comp_state .
+
+    $default  reduce using rule 15 (funct_def)
+
+
+状態 104
+
+   32 comp_state: '{' $@6 . declaration_list_opt state_list_opt '}'
+
+    INT  shift, and go to state 105
+
+    $default  reduce using rule 33 (declaration_list_opt)
+
+    declaration           go to state 106
+    declaration_list_opt  go to state 107
+    declaration_list      go to state 108
+
+
+状態 105
+
+    7 declaration: INT . declarator_list ';'
+
+    IDENTIFIER  shift, and go to state 9
+
+    declarator_list  go to state 10
+    decl_assign      go to state 11
+    declarator       go to state 19
+
+
+状態 106
+
+   37 declaration_list: declaration .
+
+    $default  reduce using rule 37 (declaration_list)
+
+
+状態 107
+
+   32 comp_state: '{' $@6 declaration_list_opt . state_list_opt '}'
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    IF          shift, and go to state 109
+    WHILE       shift, and go to state 110
+    FOR         shift, and go to state 111
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    RETURN      shift, and go to state 112
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    ';'         shift, and go to state 113
+    '('         shift, and go to state 25
+    '{'         shift, and go to state 102
+
+    $default  reduce using rule 35 (state_list_opt)
+
+    state             go to state 114
+    comp_state        go to state 115
+    state_list_opt    go to state 116
+    state_list        go to state 117
+    expr              go to state 118
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 108
+
+   34 declaration_list_opt: declaration_list .
+   38 declaration_list: declaration_list . declaration
+
+    INT  shift, and go to state 105
+
+    $default  reduce using rule 34 (declaration_list_opt)
+
+    declaration  go to state 119
+
+
+状態 109
+
+   24 state: IF . '(' expr ')' state
+   25      | IF . '(' expr ')' state ELSE state
+
+    '('  shift, and go to state 120
+
+
+状態 110
+
+   27 state: WHILE . $@4 '(' expr ')' state
+
+    $default  reduce using rule 26 ($@4)
+
+    $@4  go to state 121
+
+
+状態 111
+
+   29 state: FOR . $@5 '(' expr_opt ';' expr_opt ';' expr_opt ')' state
+
+    $default  reduce using rule 28 ($@5)
+
+    $@5  go to state 122
+
+
+状態 112
+
+   30 state: RETURN . expr ';'
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    expr              go to state 123
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 113
+
+   21 state: ';' .
+
+    $default  reduce using rule 21 (state)
+
+
+状態 114
+
+   39 state_list: state .
+
+    $default  reduce using rule 39 (state_list)
+
+
+状態 115
+
+   23 state: comp_state .
+
+    $default  reduce using rule 23 (state)
+
+
+状態 116
+
+   32 comp_state: '{' $@6 declaration_list_opt state_list_opt . '}'
+
+    '}'  shift, and go to state 124
+
+
+状態 117
+
+   36 state_list_opt: state_list .
+   40 state_list: state_list . state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    IF          shift, and go to state 109
+    WHILE       shift, and go to state 110
+    FOR         shift, and go to state 111
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    RETURN      shift, and go to state 112
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    ';'         shift, and go to state 113
+    '('         shift, and go to state 25
+    '{'         shift, and go to state 102
+
+    $default  reduce using rule 36 (state_list_opt)
+
+    state             go to state 125
+    comp_state        go to state 115
+    expr              go to state 118
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 118
+
+   22 state: expr . ';'
+   44 expr: expr . ',' assign_expr
+
+    ';'  shift, and go to state 126
+    ','  shift, and go to state 78
+
+
+状態 119
+
+   38 declaration_list: declaration_list declaration .
+
+    $default  reduce using rule 38 (declaration_list)
+
+
+状態 120
+
+   24 state: IF '(' . expr ')' state
+   25      | IF '(' . expr ')' state ELSE state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    expr              go to state 127
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 121
+
+   27 state: WHILE $@4 . '(' expr ')' state
+
+    '('  shift, and go to state 128
+
+
+状態 122
+
+   29 state: FOR $@5 . '(' expr_opt ';' expr_opt ';' expr_opt ')' state
+
+    '('  shift, and go to state 129
+
+
+状態 123
+
+   30 state: RETURN expr . ';'
+   44 expr: expr . ',' assign_expr
+
+    ';'  shift, and go to state 130
+    ','  shift, and go to state 78
+
+
+状態 124
+
+   32 comp_state: '{' $@6 declaration_list_opt state_list_opt '}' .
+
+    $default  reduce using rule 32 (comp_state)
+
+
+状態 125
+
+   40 state_list: state_list state .
+
+    $default  reduce using rule 40 (state_list)
+
+
+状態 126
+
+   22 state: expr ';' .
+
+    $default  reduce using rule 22 (state)
+
+
+状態 127
+
+   24 state: IF '(' expr . ')' state
+   25      | IF '(' expr . ')' state ELSE state
+   44 expr: expr . ',' assign_expr
+
+    ','  shift, and go to state 78
+    ')'  shift, and go to state 131
+
+
+状態 128
+
+   27 state: WHILE $@4 '(' . expr ')' state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    expr              go to state 132
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 129
+
+   29 state: FOR $@5 '(' . expr_opt ';' expr_opt ';' expr_opt ')' state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    $default  reduce using rule 41 (expr_opt)
+
+    expr_opt          go to state 133
+    expr              go to state 134
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 130
+
+   30 state: RETURN expr ';' .
+
+    $default  reduce using rule 30 (state)
+
+
+状態 131
+
+   24 state: IF '(' expr ')' . state
+   25      | IF '(' expr ')' . state ELSE state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    IF          shift, and go to state 109
+    WHILE       shift, and go to state 110
+    FOR         shift, and go to state 111
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    RETURN      shift, and go to state 112
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    ';'         shift, and go to state 113
+    '('         shift, and go to state 25
+    '{'         shift, and go to state 102
+
+    state             go to state 135
+    comp_state        go to state 115
+    expr              go to state 118
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 132
+
+   27 state: WHILE $@4 '(' expr . ')' state
+   44 expr: expr . ',' assign_expr
+
+    ','  shift, and go to state 78
+    ')'  shift, and go to state 136
+
+
+状態 133
+
+   29 state: FOR $@5 '(' expr_opt . ';' expr_opt ';' expr_opt ')' state
+
+    ';'  shift, and go to state 137
+
+
+状態 134
+
+   42 expr_opt: expr .
+   44 expr: expr . ',' assign_expr
+
+    ','  shift, and go to state 78
+
+    $default  reduce using rule 42 (expr_opt)
+
+
+状態 135
+
+   24 state: IF '(' expr ')' state .
+   25      | IF '(' expr ')' state . ELSE state
+
+    ELSE  shift, and go to state 138
+
+    ELSE      [reduce using rule 24 (state)]
+    $default  reduce using rule 24 (state)
+
+
+状態 136
+
+   27 state: WHILE $@4 '(' expr ')' . state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    IF          shift, and go to state 109
+    WHILE       shift, and go to state 110
+    FOR         shift, and go to state 111
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    RETURN      shift, and go to state 112
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    ';'         shift, and go to state 113
+    '('         shift, and go to state 25
+    '{'         shift, and go to state 102
+
+    state             go to state 139
+    comp_state        go to state 115
+    expr              go to state 118
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 137
+
+   29 state: FOR $@5 '(' expr_opt ';' . expr_opt ';' expr_opt ')' state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    $default  reduce using rule 41 (expr_opt)
+
+    expr_opt          go to state 140
+    expr              go to state 134
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 138
+
+   25 state: IF '(' expr ')' state ELSE . state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    IF          shift, and go to state 109
+    WHILE       shift, and go to state 110
+    FOR         shift, and go to state 111
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    RETURN      shift, and go to state 112
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    ';'         shift, and go to state 113
+    '('         shift, and go to state 25
+    '{'         shift, and go to state 102
+
+    state             go to state 141
+    comp_state        go to state 115
+    expr              go to state 118
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 139
+
+   27 state: WHILE $@4 '(' expr ')' state .
+
+    $default  reduce using rule 27 (state)
+
+
+状態 140
+
+   29 state: FOR $@5 '(' expr_opt ';' expr_opt . ';' expr_opt ')' state
+
+    ';'  shift, and go to state 142
+
+
+状態 141
+
+   25 state: IF '(' expr ')' state ELSE state .
+
+    $default  reduce using rule 25 (state)
+
+
+状態 142
+
+   29 state: FOR $@5 '(' expr_opt ';' expr_opt ';' . expr_opt ')' state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    '('         shift, and go to state 25
+
+    $default  reduce using rule 41 (expr_opt)
+
+    expr_opt          go to state 143
+    expr              go to state 134
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 143
+
+   29 state: FOR $@5 '(' expr_opt ';' expr_opt ';' expr_opt . ')' state
+
+    ')'  shift, and go to state 144
+
+
+状態 144
+
+   29 state: FOR $@5 '(' expr_opt ';' expr_opt ';' expr_opt ')' . state
+
+    CONST       shift, and go to state 20
+    IDENTIFIER  shift, and go to state 21
+    IF          shift, and go to state 109
+    WHILE       shift, and go to state 110
+    FOR         shift, and go to state 111
+    BREAK       shift, and go to state 48
+    CONTINUE    shift, and go to state 49
+    RETURN      shift, and go to state 112
+    MINUS       shift, and go to state 22
+    INC         shift, and go to state 23
+    DEC         shift, and go to state 24
+    ';'         shift, and go to state 113
+    '('         shift, and go to state 25
+    '{'         shift, and go to state 102
+
+    state             go to state 145
+    comp_state        go to state 115
+    expr              go to state 118
+    assign_expr       go to state 51
+    logical_OR_expr   go to state 27
+    logical_AND_expr  go to state 28
+    equality_expr     go to state 29
+    relation_expr     go to state 30
+    add_expr          go to state 31
+    mult_expr         go to state 32
+    unary_expr        go to state 33
+    postfix_expr      go to state 34
+    prim_expr         go to state 35
+
+
+状態 145
+
+   29 state: FOR $@5 '(' expr_opt ';' expr_opt ';' expr_opt ')' state .
+
+    $default  reduce using rule 29 (state)

@@ -1,0 +1,7 @@
+int fact(int n){
+	int i, result;
+	result = 1;
+	for(i=1; i <= n; i+=1)
+		result *= i;
+	return result;
+}
