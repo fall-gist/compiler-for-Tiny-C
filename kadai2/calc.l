@@ -14,3 +14,4 @@ digit		[0-9]
 [ \t\n]		; /* スペース、タブ、改行は無視 */
 .				yyerror("Error: invalid charcter");
 %%
+
